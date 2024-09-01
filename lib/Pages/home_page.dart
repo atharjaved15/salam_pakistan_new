@@ -357,7 +357,11 @@ class _LandingPageState extends State<LandingPage> {
   // ignore: non_constant_identifier_names
   Widget Receipt(Map<String, dynamic> applicationDetails) {
     return Container(
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.symmetric(
+        vertical: 20.0,
+        horizontal:
+            MediaQuery.of(context).size.width * 0.05, // Responsive padding
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -377,7 +381,7 @@ class _LandingPageState extends State<LandingPage> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Expanded(
+              Expanded(
                 flex: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -386,69 +390,78 @@ class _LandingPageState extends State<LandingPage> {
                       "SALAM PAKISTAN ORGANIZATION DOKOTA",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 24,
+                        fontSize: MediaQuery.of(context).size.width *
+                            0.009, // Responsive font size
                         color: Colors.teal,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
                       "Salam Pakistan Organization Dokota is committed to fostering the educational and cultural growth of youth through various programs, competitions, and events. Our mission is to inspire, educate, and empower students to excel in their academic and extracurricular pursuits.",
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: MediaQuery.of(context).size.width *
+                            0.009, // Responsive font size
                         color: Colors.black87,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Text(
                       "Competition: Seerat Un Nabi (SAW) Debating Competition 2024",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: MediaQuery.of(context).size.width *
+                            0.009, // Responsive font size
                         color: Colors.black,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 20),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width *
+                      0.003), // Responsive spacing
               Expanded(
                 flex: 1,
                 child: Image.network(
                   applicationDetails['imageUrl'] ??
                       'https://via.placeholder.com/150',
-                  height: 150,
-                  fit: BoxFit.cover,
+                  height: MediaQuery.of(context).size.width *
+                      0.3, // Responsive image height
+                  fit: BoxFit.fitHeight,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 20),
-          const Divider(
-            color: Colors.grey,
-            thickness: 1.5,
-          ),
-          const SizedBox(height: 20),
+          SizedBox(
+              height: MediaQuery.of(context).size.height *
+                  0.02), // Responsive spacing
+          const Divider(color: Colors.grey, thickness: 1.5),
+          SizedBox(
+              height: MediaQuery.of(context).size.height *
+                  0.02), // Responsive spacing
 
           // Applicant Details Section
           _buildApplicantDetails(applicationDetails),
 
-          const SizedBox(height: 30),
-          const Divider(
-            color: Colors.grey,
-            thickness: 1.5,
-          ),
-          const SizedBox(height: 20),
+          SizedBox(
+              height: MediaQuery.of(context).size.height *
+                  0.03), // Responsive spacing
+          const Divider(color: Colors.grey, thickness: 1.5),
+          SizedBox(
+              height: MediaQuery.of(context).size.height *
+                  0.02), // Responsive spacing
 
           // Signature Section
           _buildSignatureSection(),
 
-          const SizedBox(height: 30),
-          const Divider(
-            color: Colors.grey,
-            thickness: 1.5,
-          ),
-          const SizedBox(height: 20),
+          SizedBox(
+              height: MediaQuery.of(context).size.height *
+                  0.03), // Responsive spacing
+          const Divider(color: Colors.grey, thickness: 1.5),
+          SizedBox(
+              height: MediaQuery.of(context).size.height *
+                  0.02), // Responsive spacing
 
           // Footer Section
           _buildFooter(),
