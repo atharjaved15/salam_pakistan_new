@@ -16,7 +16,7 @@ class ImagePreviewScreen extends StatelessWidget {
       body: Center(
         child: PhotoView(
           imageProvider: NetworkImage(imageUrl),
-          backgroundDecoration: const BoxDecoration(color: Colors.black),
+          backgroundDecoration: const BoxDecoration(color: Colors.white),
         ),
       ),
     );
