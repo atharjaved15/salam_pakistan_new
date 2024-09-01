@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// ignore: depend_on_referenced_packages
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:salam_pakistan_new/Widget/custom_button.dart';
 
 class LandingPage extends StatefulWidget {
@@ -12,7 +12,6 @@ class LandingPage extends StatefulWidget {
   _LandingPageState createState() => _LandingPageState();
 }
 
-//newclass
 class _LandingPageState extends State<LandingPage> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
@@ -93,7 +92,7 @@ class _LandingPageState extends State<LandingPage> {
             // Header Section
             Container(
               width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.6,
+              height: MediaQuery.of(context).size.height * 0.7,
               padding: const EdgeInsets.all(20.0),
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
@@ -196,7 +195,7 @@ class _LandingPageState extends State<LandingPage> {
                   ),
                   const SizedBox(height: 20),
                   _applicationDetails != null
-                      ? _buildApplicationDetails()
+                      ? Receipt(_applicationDetails!)
                       : const SizedBox.shrink(),
                   const SizedBox(height: 20),
                   const Text(
@@ -271,140 +270,6 @@ class _LandingPageState extends State<LandingPage> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildApplicationDetails() {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Center(
-            child: Text(
-              'SALAM PAKISTAN ORGANIZATION DOKOTA',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.teal,
-                letterSpacing: 1.5,
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Name: ${_applicationDetails!['applicantName']}',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      'Father Name: ${_applicationDetails!['fatherName']}',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                flex: 1,
-                child: _applicationDetails!['imageUrl'] != null
-                    ? SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.2,
-                        width: MediaQuery.of(context).size.width * 0.1,
-                        child: Image.network(
-                          _applicationDetails!['imageUrl'],
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                    : Container(
-                        height: 100,
-                        color: Colors.grey[300],
-                        child: const Center(
-                          child: Text('No Image Available'),
-                        ),
-                      ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Text(
-            'School/College: ${_applicationDetails!['schoolCollege']}',
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'Class: ${_applicationDetails!['studentClass']}',
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'Category: ${_applicationDetails!['category']}',
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'Contact Number 1: ${_applicationDetails!['contactNumber1']}',
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'Contact Number 2: ${_applicationDetails!['contactNumber2']}',
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'Address: ${_applicationDetails!['address']}',
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.black87,
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -485,6 +350,355 @@ class _LandingPageState extends State<LandingPage> {
             color: Colors.black54,
           ),
         ),
+      ],
+    );
+  }
+
+  // ignore: non_constant_identifier_names
+  Widget Receipt(Map<String, dynamic> applicationDetails) {
+    return Container(
+      padding: const EdgeInsets.all(20.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header Section with Image
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Expanded(
+                flex: 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "SALAM PAKISTAN ORGANIZATION DOKOTA",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                        color: Colors.teal,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "Salam Pakistan Organization Dokota is committed to fostering the educational and cultural growth of youth through various programs, competitions, and events. Our mission is to inspire, educate, and empower students to excel in their academic and extracurricular pursuits.",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      "Competition: Seerat Un Nabi (SAW) Debating Competition 2024",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 20),
+              Expanded(
+                flex: 1,
+                child: Image.network(
+                  applicationDetails['imageUrl'] ??
+                      'https://via.placeholder.com/150',
+                  height: 150,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          const Divider(
+            color: Colors.grey,
+            thickness: 1.5,
+          ),
+          const SizedBox(height: 20),
+
+          // Applicant Details Section
+          _buildApplicantDetails(applicationDetails),
+
+          const SizedBox(height: 30),
+          const Divider(
+            color: Colors.grey,
+            thickness: 1.5,
+          ),
+          const SizedBox(height: 20),
+
+          // Signature Section
+          _buildSignatureSection(),
+
+          const SizedBox(height: 30),
+          const Divider(
+            color: Colors.grey,
+            thickness: 1.5,
+          ),
+          const SizedBox(height: 20),
+
+          // Footer Section
+          _buildFooter(),
+        ],
+      ),
+    );
+  }
+
+  String _calculateAge(String dob) {
+    DateTime birthDate = DateFormat('yyyy-MM-dd').parse(dob);
+    DateTime today = DateTime.now();
+    int years = today.year - birthDate.year;
+    int months = today.month - birthDate.month;
+
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+
+    return "$years years, $months months";
+  }
+
+  Widget _buildApplicantDetails(Map<String, dynamic> applicationDetails) {
+    String dob = applicationDetails['dateOfBirth'] ?? 'N/A';
+    String age = dob != 'N/A' ? _calculateAge(dob) : 'N/A';
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: _buildDetailItem(
+                  'Serial No', applicationDetails['serialNumber']),
+            ),
+            Expanded(
+              flex: 1,
+              child: _buildDetailItem(
+                  'Eligibilty',
+                  applicationDetails['isEligible']
+                      ? "Congrats! You are Eligible"
+                      : "Alas! you are not Eligible"),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child:
+                  _buildDetailItem('Name', applicationDetails['applicantName']),
+            ),
+            Expanded(
+              flex: 1,
+              child: _buildDetailItem(
+                  'Father Name', applicationDetails['fatherName']),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: _buildDetailItem(
+                  'Date of Birth', applicationDetails['dateOfBirth']),
+            ),
+            Expanded(
+              flex: 1,
+              child: _buildDetailItem('Age', age),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child:
+                  _buildDetailItem('Class', applicationDetails['studentClass']),
+            ),
+            Expanded(
+              flex: 1,
+              child: _buildDetailItem(
+                  'School/College', applicationDetails['schoolCollege']),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child:
+                  _buildDetailItem('Category', applicationDetails['category']),
+            ),
+            Expanded(
+              flex: 1,
+              child: _buildDetailItem(
+                  'Contact Number 1', applicationDetails['contactNumber1']),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: _buildDetailItem(
+                  'Contact Number 2', applicationDetails['contactNumber2']),
+            ),
+            Expanded(
+                flex: 1,
+                child:
+                    _buildDetailItem('Address', applicationDetails['address'])),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDetailItem(String title, String? value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "$title: ",
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value ?? 'N/A',
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.black87,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSignatureSection() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          children: [
+            const Text(
+              "Signature (Authorities)",
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 50),
+            Container(
+              width: 150,
+              height: 1,
+              color: Colors.black,
+            ),
+          ],
+        ),
+        Column(
+          children: [
+            const Text(
+              "Signature (Authorities)",
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 50),
+            Container(
+              width: 150,
+              height: 1,
+              color: Colors.black,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFooter() {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Important Notice",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            color: Colors.black,
+          ),
+        ),
+        SizedBox(height: 10),
+        Text(
+          "This receipt must be stamped during both the audition and the final competition. Please ensure its safekeeping, as it is a critical document for your participation in the event.",
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.black87,
+          ),
+        ),
+        SizedBox(height: 20),
+        Text(
+          "This receipt has been issued by Salam Pakistan Organization Dokota.",
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.black87,
+          ),
+        ),
+        SizedBox(height: 20),
+        Text(
+          "For further information or inquiries, please contact:",
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.black87,
+          ),
+        ),
+        SizedBox(height: 10),
+        Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Text(
+                "Phone: +92 302 743 9724",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.teal,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Text(
+                "Phone: +92 300 773 3764",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.teal,
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 20),
       ],
     );
   }

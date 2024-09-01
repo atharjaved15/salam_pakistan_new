@@ -1,5 +1,9 @@
 // ignore: avoid_web_libraries_in_flutter
+// ignore_for_file: unnecessary_null_comparison
+
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -103,6 +107,52 @@ class RegistrationController extends GetxController {
       try {
         isSubmitting.value = true;
 
+        // Calculate age
+        DateTime birthDate = DateTime.parse(dateOfBirth.value);
+        DateTime today = DateTime.now();
+        int age = today.year - birthDate.year;
+        if (today.month < birthDate.month ||
+            (today.month == birthDate.month && today.day < birthDate.day)) {
+          age--;
+        }
+
+        // Determine eligibility
+        bool isEligible = false;
+
+        if (category.value != null &&
+            category.value == 'Primary' &&
+            age <= 11) {
+          isEligible = true;
+        } else if (category.value != null &&
+            category.value == 'Middle' &&
+            age <= 14 &&
+            age >= 12) {
+          isEligible = true;
+        } else if (category.value != null &&
+            category.value == 'High' &&
+            age <= 17 &&
+            age >= 15) {
+          isEligible = true;
+        } else if (category.value != null &&
+            category.value == 'College' &&
+            age <= 20 &&
+            age >= 18) {
+          isEligible = true;
+        } else {
+          isEligible = false; // Default to false if conditions don't match
+        }
+        if (kDebugMode) {
+          print("Category: ${category.value}, Age: $age");
+        }
+
+        if (category.value != null &&
+            category.value == 'Primary' &&
+            age <= 11) {
+          isEligible = true;
+        } else {
+          isEligible = false;
+        }
+
         final reader = html.FileReader();
         reader.readAsArrayBuffer(selectedImageFile!);
         await reader.onLoadEnd.first;
@@ -129,6 +179,8 @@ class RegistrationController extends GetxController {
           'contactNumber2': contactNumber2.value,
           'address': address.value,
           'dateOfBirth': dateOfBirth.value,
+          'age': age,
+          'isEligible': isEligible,
           'imageUrl': downloadUrl,
           'timestamp': FieldValue.serverTimestamp(),
         });
@@ -169,66 +221,4 @@ class RegistrationController extends GetxController {
           snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
     }
   }
-
-  // Future<pw.Document> generatePdf(String imageUrl) async {
-  //   final pdf = pw.Document();
-
-  //   final netImage = await networkImage(imageUrl);
-
-  //   pdf.addPage(
-  //     pw.Page(
-  //       build: (pw.Context context) {
-  //         return pw.Column(
-  //           crossAxisAlignment: pw.CrossAxisAlignment.start,
-  //           children: [
-  //             pw.Text(
-  //               'Application Receipt',
-  //               style: pw.TextStyle(
-  //                 fontSize: 24,
-  //                 fontWeight: pw.FontWeight.bold,
-  //               ),
-  //             ),
-  //             pw.SizedBox(height: 20),
-  //             pw.Text('Serial Number: ${serialNumber.value}'),
-  //             pw.Text('Applicant Name: ${applicantName.value}'),
-  //             pw.Text('Father Name: ${fatherName.value}'),
-  //             pw.Text('School/College: ${schoolCollege.value}'),
-  //             pw.Text('Class: ${studentClass.value}'),
-  //             pw.Text('Category: ${category.value}'),
-  //             pw.Text('Date of Birth: ${dateOfBirth.value}'),
-  //             pw.Text('Contact Number 1: ${contactNumber1.value}'),
-  //             pw.Text('Contact Number 2: ${contactNumber2.value}'),
-  //             pw.Text('Address: ${address.value}'),
-  //             pw.SizedBox(height: 20),
-  //             pw.Text('Applicant Photo:'),
-  //             pw.SizedBox(height: 10),
-  //             pw.Image(netImage, width: 200, height: 200),
-  //           ],
-  //         );
-  //       },
-  //     ),
-  //   );
-
-  //   return pdf;
-  // }
-
-  // Future<void> uploadPdfToFirebase(pw.Document pdf) async {
-  //   final pdfData = await pdf.save();
-  //   final pdfBlob = html.Blob([pdfData]);
-
-  //   String pdfFileName = '${serialNumber.value}.pdf';
-  //   final pdfRef =
-  //       FirebaseStorage.instance.ref().child('applicant_pdfs/$pdfFileName');
-  //   await pdfRef.putBlob(pdfBlob);
-  // }
-
-  // void triggerPdfDownload(pw.Document pdf) async {
-  //   final pdfData = await pdf.save();
-  //   final blob = html.Blob([pdfData], 'application/pdf');
-  //   final url = html.Url.createObjectUrlFromBlob(blob);
-  //   final anchor = html.AnchorElement(href: url)
-  //     ..setAttribute("download", "${serialNumber.value}.pdf")
-  //     ..click();
-  //   html.Url.revokeObjectUrl(url);
-  // }
 }
