@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -422,14 +423,12 @@ class _LandingPageState extends State<LandingPage> {
                   width: MediaQuery.of(context).size.width *
                       0.003), // Responsive spacing
               Expanded(
-                flex: 1,
-                child: Image.network(
-                  applicationDetails['imageUrl'] ??
-                      'https://via.placeholder.com/150',
-                  height: 180, // Responsive image height
-                  fit: BoxFit.fitHeight,
-                ),
-              ),
+                  flex: 1,
+                  child: CachedNetworkImage(
+                    imageUrl: applicationDetails['imageUrl'],
+                    fit: BoxFit.fitHeight,
+                    height: 150,
+                  )),
             ],
           ),
           SizedBox(
