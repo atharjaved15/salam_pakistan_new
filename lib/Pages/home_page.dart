@@ -337,10 +337,14 @@ class _LandingPageState extends State<LandingPage> {
               Expanded(
                 flex: 1,
                 child: _applicationDetails!['imageUrl'] != null
-                    ? Image.network(
-                        _applicationDetails!['imageUrl'],
-                        height: 100,
-                        fit: BoxFit.cover,
+                    ? SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.2,
+                        width: MediaQuery.of(context).size.width * 0.1,
+                        child: Image.network(
+                          _applicationDetails!['imageUrl'],
+                          height: 100,
+                          fit: BoxFit.cover,
+                        ),
                       )
                     : Container(
                         height: 100,
