@@ -427,7 +427,7 @@ class _LandingPageState extends State<LandingPage> {
                   child: CachedNetworkImage(
                     imageUrl: applicationDetails['imageUrl'],
                     fit: BoxFit.fitHeight,
-                    height: 150,
+                    height: 100,
                   )),
             ],
           ),
