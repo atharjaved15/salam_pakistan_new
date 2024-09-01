@@ -136,13 +136,13 @@ class RegistrationController extends GetxController {
         });
 
         // Generate PDF
-        final pdf = await generatePdf(downloadUrl);
+        //final pdf = await generatePdf(downloadUrl);
 
         // Upload PDF to Firebase
-        await uploadPdfToFirebase(pdf);
+        // await uploadPdfToFirebase(pdf);
 
         // Trigger PDF download in browser
-        triggerPdfDownload(pdf);
+        //triggerPdfDownload(pdf);
 
         Get.dialog(
           AlertDialog(
@@ -172,62 +172,65 @@ class RegistrationController extends GetxController {
     }
   }
 
-  Future<pw.Document> generatePdf(String imageUrl) async {
-    final pdf = pw.Document();
+  // Future<pw.Document> generatePdf(String imageUrl) async {
+  //   final pdf = pw.Document();
 
-    final netImage = await networkImage(imageUrl);
+  //   final netImage = await networkImage(imageUrl);
 
-    pdf.addPage(
-      pw.Page(
-        build: (pw.Context context) {
-          return pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.start,
-            children: [
-              pw.Text(
-                'Application Receipt',
-                style: pw.TextStyle(
-                  fontSize: 24,
-                  fontWeight: pw.FontWeight.bold,
-                ),
-              ),
-              pw.SizedBox(height: 20),
-              pw.Text('Serial Number: ${serialNumber.value}'),
-              pw.Text('Applicant Name: ${applicantName.value}'),
-              pw.Text('Father Name: ${fatherName.value}'),
-              pw.Text('School/College: ${schoolCollege.value}'),
-              pw.Text('Class: ${studentClass.value}'),
-              pw.Text('Category: ${category.value}'),
-              pw.Text('Date of Birth: ${dateOfBirth.value}'),
-              pw.Text('Contact Number 1: ${contactNumber1.value}'),
-              pw.Text('Contact Number 2: ${contactNumber2.value}'),
-              pw.Text('Address: ${address.value}'),
-              pw.SizedBox(height: 20),
-              pw.Text('Applicant Photo:'),
-              pw.SizedBox(height: 10),
-              pw.Image(netImage, width: 200, height: 200),
-            ],
-          );
-        },
-      ),
-    );
+  //   pdf.addPage(
+  //     pw.Page(
+  //       build: (pw.Context context) {
+  //         return pw.Column(
+  //           crossAxisAlignment: pw.CrossAxisAlignment.start,
+  //           children: [
+  //             pw.Text(
+  //               'Application Receipt',
+  //               style: pw.TextStyle(
+  //                 fontSize: 24,
+  //                 fontWeight: pw.FontWeight.bold,
+  //               ),
+  //             ),
+  //             pw.SizedBox(height: 20),
+  //             pw.Text('Serial Number: ${serialNumber.value}'),
+  //             pw.Text('Applicant Name: ${applicantName.value}'),
+  //             pw.Text('Father Name: ${fatherName.value}'),
+  //             pw.Text('School/College: ${schoolCollege.value}'),
+  //             pw.Text('Class: ${studentClass.value}'),
+  //             pw.Text('Category: ${category.value}'),
+  //             pw.Text('Date of Birth: ${dateOfBirth.value}'),
+  //             pw.Text('Contact Number 1: ${contactNumber1.value}'),
+  //             pw.Text('Contact Number 2: ${contactNumber2.value}'),
+  //             pw.Text('Address: ${address.value}'),
+  //             pw.SizedBox(height: 20),
+  //             pw.Text('Applicant Photo:'),
+  //             pw.SizedBox(height: 10),
+  //             pw.Image(netImage, width: 200, height: 200),
+  //           ],
+  //         );
+  //       },
+  //     ),
+  //   );
 
-    return pdf;
-  }
+  //   return pdf;
+  // }
 
-  Future<void> uploadPdfToFirebase(pw.Document pdf) async {
-    final pdfData = await pdf.save();
-    final pdfBlob = html.Blob([pdfData]);
+  // Future<void> uploadPdfToFirebase(pw.Document pdf) async {
+  //   final pdfData = await pdf.save();
+  //   final pdfBlob = html.Blob([pdfData]);
 
-    String pdfFileName = '${serialNumber.value}.pdf';
-    final pdfRef =
-        FirebaseStorage.instance.ref().child('applicant_pdfs/$pdfFileName');
-    await pdfRef.putBlob(pdfBlob);
-  }
+  //   String pdfFileName = '${serialNumber.value}.pdf';
+  //   final pdfRef =
+  //       FirebaseStorage.instance.ref().child('applicant_pdfs/$pdfFileName');
+  //   await pdfRef.putBlob(pdfBlob);
+  // }
 
-  void triggerPdfDownload(pw.Document pdf) async {
-    final pdfData = await pdf.save();
-    final blob = html.Blob([pdfData], 'application/pdf');
-    final url = html.Url.createObjectUrlFromBlob(blob);
-    html.Url.revokeObjectUrl(url);
-  }
+  // void triggerPdfDownload(pw.Document pdf) async {
+  //   final pdfData = await pdf.save();
+  //   final blob = html.Blob([pdfData], 'application/pdf');
+  //   final url = html.Url.createObjectUrlFromBlob(blob);
+  //   final anchor = html.AnchorElement(href: url)
+  //     ..setAttribute("download", "${serialNumber.value}.pdf")
+  //     ..click();
+  //   html.Url.revokeObjectUrl(url);
+  // }
 }
