@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 // ignore: depend_on_referenced_packages
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 import 'package:salam_pakistan_new/Pages/home_page.dart';
 
 class RegistrationController extends GetxController {

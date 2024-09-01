@@ -12,6 +12,7 @@ class CustomAppBar extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class GradientAppBar extends StatelessWidget {
   final double barHeight = 56.0;
   String customText;
