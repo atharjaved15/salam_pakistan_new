@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:salam_pakistan_new/Widget/custom_app_bar.dart';
 
 class ImagePreviewScreen extends StatelessWidget {
   final String imageUrl;
@@ -10,8 +11,7 @@ class ImagePreviewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Image Preview'),
-        backgroundColor: Colors.teal,
+        actions: const [CustomAppBar(title: 'Image Preview')],
       ),
       body: Center(
         child: PhotoView(

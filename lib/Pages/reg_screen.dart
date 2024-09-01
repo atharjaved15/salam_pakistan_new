@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:salam_pakistan_new/Contrtoller/regform_controller.dart';
+import 'package:salam_pakistan_new/Widget/custom_app_bar.dart';
 
 class RegistrationForm extends StatelessWidget {
   final RegistrationController controller = Get.put(RegistrationController());
@@ -12,8 +13,7 @@ class RegistrationForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Registration Form'),
-        backgroundColor: Colors.teal,
+        actions: const [CustomAppBar(title: 'Registration Screen')],
       ),
       body: Obx(() {
         return controller.isSubmitting.value
