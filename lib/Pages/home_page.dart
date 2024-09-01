@@ -426,8 +426,7 @@ class _LandingPageState extends State<LandingPage> {
                 child: Image.network(
                   applicationDetails['imageUrl'] ??
                       'https://via.placeholder.com/150',
-                  height: MediaQuery.of(context).size.width *
-                      0.3, // Responsive image height
+                  height: 150, // Responsive image height
                   fit: BoxFit.fitHeight,
                 ),
               ),
