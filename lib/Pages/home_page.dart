@@ -114,7 +114,7 @@ class _LandingPageState extends State<LandingPage> {
                           Image.asset(
                             'images/logo.png',
                             color: Colors.white, // Your logo path
-                            height: 50,
+                            height: 100,
                           ),
                           const SizedBox(width: 10),
                         ],
